@@ -116,6 +116,7 @@ namespace PA1
         {
             System.Console.WriteLine("Enter the interger value of the month you wish to view:");
             bool found = false;
+            int count = 0;
             int userInput = int.Parse(Console.ReadLine());
             System.Console.WriteLine($"Here are the vehicles that need maintenance in the {userInput} month of the year:");
             foreach (Driver driver in driversList)
@@ -123,6 +124,7 @@ namespace PA1
                 if (userInput == driver.vehicle.maintenanceDate.Month)
                 {
                     found = true;
+                    count ++;
                     System.Console.WriteLine($"Vehicle ID: {driver.vehicle.vehicleID}   Model: {driver.vehicle.model}    Maintenance Date: {driver.vehicle.maintenanceDate}");
                 }
 
@@ -130,6 +132,11 @@ namespace PA1
             if (!found)
             {
                 System.Console.WriteLine("No vehicles need maintenance in that month");
+            }
+            else
+            {
+            System.Console.WriteLine($"There are {count} vehicles that need maintenance in the {userInput} month of the year");
+            
             }
             System.Console.WriteLine("__________________________________________________________");
             System.Console.WriteLine("Press any key to return to main menu");
