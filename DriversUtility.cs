@@ -118,8 +118,10 @@ namespace PA1
             bool found = false;
             int count = 0;
             int userInput = int.Parse(Console.ReadLine());
+             List<Driver> driversListCopy = new List<Driver>(driversList);
+            driversListCopy.Sort((x, y) => x.vehicle.maintenanceDate.Year.CompareTo(y.vehicle.maintenanceDate.Year));
             System.Console.WriteLine($"Here are the vehicles that need maintenance in the {userInput} month of the year:");
-            foreach (Driver driver in driversList)
+            foreach (Driver driver in driversListCopy)
             {
                 if (userInput == driver.vehicle.maintenanceDate.Month)
                 {
