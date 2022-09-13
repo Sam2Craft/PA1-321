@@ -112,7 +112,7 @@ namespace PA1
 
         }
 
-        public void ViewMaintenanceDateByMonth()
+        public void ViewMaintenanceDateByMonth() //Tried my best to be able to display the sum of each maintenance each year, got close. Here is the version that sorts it by year before displaying them in that order
         {
             System.Console.WriteLine("Enter the interger value of the month you wish to view:");
             bool found = false;
