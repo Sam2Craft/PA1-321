@@ -112,34 +112,56 @@ namespace PA1
 
         }
 
-        public void ViewMaintenanceDateByMonth() //Tried my best to be able to display the sum of each maintenance each year, got close. Here is the version that sorts it by year before displaying them in that order
+        public void ViewMaintenanceDateByMonth() 
         {
             System.Console.WriteLine("Enter the interger value of the month you wish to view:");
             bool found = false;
-            int count = 0;
             int userInput = int.Parse(Console.ReadLine());
-             List<Driver> driversListCopy = new List<Driver>(driversList);
+            int yearCount = 0;
+            int count = 0;
+            List<Driver> driversListCopy = new List<Driver>(driversList);
             driversListCopy.Sort((x, y) => x.vehicle.maintenanceDate.Year.CompareTo(y.vehicle.maintenanceDate.Year));
             System.Console.WriteLine($"Here are the vehicles that need maintenance in the {userInput} month of the year:");
             foreach (Driver driver in driversListCopy)
             {
-                if (userInput == driver.vehicle.maintenanceDate.Month)
+            try{
+                if (userInput == driver.vehicle.maintenanceDate.Month && !driversListCopy[count].vehicle.maintenanceDate.Year.Equals(driversListCopy[count + 1].vehicle.maintenanceDate.Year))
                 {
-                    found = true;
-                    count ++;
                     System.Console.WriteLine($"Vehicle ID: {driver.vehicle.vehicleID}   Model: {driver.vehicle.model}    Maintenance Date: {driver.vehicle.maintenanceDate}");
+                    yearCount++;
+                    System.Console.WriteLine($"There are {yearCount} vehicles due for maintenance in month {userInput} of {driversListCopy[count ].vehicle.maintenanceDate.Year}");
+                    yearCount = 0;
+                    //yearCount++;
+                 
+
                 }
+
+                else if (userInput == driver.vehicle.maintenanceDate.Month && driversListCopy[count].vehicle.maintenanceDate.Year.Equals(driversListCopy[count + 1].vehicle.maintenanceDate.Year))
+                {
+                    System.Console.WriteLine($"Vehicle ID: {driver.vehicle.vehicleID}   Model: {driver.vehicle.model}    Maintenance Date: {driver.vehicle.maintenanceDate}");
+                    yearCount++;
+                    found = true;
+                   
+                }
+                count++;
+            }
+           
+            catch(System.ArgumentOutOfRangeException)
+            {
+                System.Console.WriteLine($"Vehicle ID: {driver.vehicle.vehicleID}   Model: {driver.vehicle.model}    Maintenance Date: {driver.vehicle.maintenanceDate}");
+                yearCount++;
+                System.Console.WriteLine($"There are {yearCount} vehicles due for maintenance in month {userInput} of {driversListCopy[count ].vehicle.maintenanceDate.Year}");
+                yearCount = 0;
+            }
+            
+               
 
             }
             if (!found)
             {
                 System.Console.WriteLine("No vehicles need maintenance in that month");
             }
-            else
-            {
-            System.Console.WriteLine($"There are {count} vehicles that need maintenance in the {userInput} month of the year");
             
-            }
             System.Console.WriteLine("__________________________________________________________");
             System.Console.WriteLine("Press any key to return to main menu");
             Console.ReadKey();
